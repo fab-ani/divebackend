@@ -1,3 +1,5 @@
+import os
+from dotenv import load_dotenv
 import firebase_admin
 from firebase_admin import credentials
 from firebase_admin import messaging
@@ -8,8 +10,12 @@ from flask import Flask, json, request, jsonify
 app = Flask(__name__)
 
 # Initialize the app only if it hasn't been initialized
+load_dotenv()
 if not firebase_admin._apps:
-    firebase_admin.initialize_app(cred)
+    cred_path = os.getenv("GOOGLE_APPLICATION_CREDENTIALS")
+    if cred_path:
+        cred = credentials.Certificate(cred_path)
+        firebase_admin.initialize_app(cred)
 
 url = "http://192.168.46.100:3000/sendNotification"
 
