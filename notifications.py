@@ -17,7 +17,7 @@ if not firebase_admin._apps:
         cred = credentials.Certificate(cred_path)
         firebase_admin.initialize_app(cred)
 
-url = "http://127.0.0.1:8080/sendNotification"
+url = "http://127.0.0.1:10000/sendNotification"
 
 @app.route('/', methods=['GET'])
 def home():
@@ -65,4 +65,4 @@ def send_notification():
         return jsonify(success=False, error=str(e)), 500
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0',port=8080, debug=False)
+    app.run(host='0.0.0.0',port=10000, debug=False)
