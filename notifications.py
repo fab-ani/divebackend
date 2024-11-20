@@ -51,9 +51,8 @@ def send_notification():
             title=title,
             body=body 
         ),token=token,
-        data={  
-                'somedata':json.dumps(postdata) if postdata else json.dumps({}),
-        }
+        data=payload,
+        
     )
 
     try:
