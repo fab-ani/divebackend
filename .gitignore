@@ -1,2 +1,15 @@
-"dive-22b9b-f2eeb3a655d2.json"
+# Firebase service account
+*.json
+
+# Environment variables
+.env
+
+# Python cache
+__pycache__/
 *.pyc
+*.pyo
+*.pyd
+
+# Editor files
+.vscode/
+.idea/
