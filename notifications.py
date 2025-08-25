@@ -7,14 +7,32 @@ from datetime import datetime, timezone
   
 app = Flask(__name__)
 
-load_dotenv() 
+import os
+import json
+import firebase_admin
+from firebase_admin import credentials, firestore
+from dotenv import load_dotenv
+
+load_dotenv()
+
 if not firebase_admin._apps:
+    # Local file
     cred_path = os.getenv("GOOGLE_APPLICATION_CREDENTIALS")
-    if cred_path  and os.path.exists(cred_path):
+    # Deployment JSON string
+    firebase_json = os.getenv("FIREBASE_SERVICE_ACCOUNT")
+
+    if cred_path and os.path.exists(cred_path):
         cred = credentials.Certificate(cred_path)
         firebase_admin.initialize_app(cred)
+    elif firebase_json:
+        cred_dict = json.loads(firebase_json)
+        cred = credentials.Certificate(cred_dict)
+        firebase_admin.initialize_app(cred)
+    else:
+        raise ValueError("No Firebase credentials provided")
 
 db = firestore.client()
+
           
 SEND_INTERVAL_SECONDS = 120  # 2 minutes
 
